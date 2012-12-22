@@ -1,0 +1,28 @@
+.slippy .slippy-pager {
+	height: 18px;
+	position: absolute;
+	text-align: center;
+	top: 404px;
+	width: 100%;
+	z-index: 2;
+}
+.slippy .slippy-pager-link {
+	background-image: url('/img/slippy_pager.png');
+	background-position: 0px 0px;
+	background-repeat: no-repeat;
+	direction: ltr;
+	display: inline-block;
+	height: 18px;
+	margin: 0px 6px;
+	overflow: hidden;
+	position: relative;
+	text-indent: -9999px;
+	width: 18px;
+	*font-size:0;
+	*line-height:0;
+	*overflow:hidden;
+	*text-indent:0;
+}
+.slippy .slippy-pager-link.selected {
+	background-position: 0px -18px;
+}

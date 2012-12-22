@@ -1,0 +1,202 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>	  <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>	  <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>slippy Testing</title>
+	<meta http-equiv="cleartype" content="on">
+
+	<link rel="stylesheet" href="css/reset.css" type="text/css" media="screen" charset="utf-8">
+	<link rel="stylesheet" href="css/slippy.css" type="text/css" media="screen" charset="utf-8">
+	<style>
+		body {
+			background: #333;
+		}
+		#container {
+			position:relative;
+			min-width:960px;
+		}
+		.hero {
+			position:relative;
+			width:100%;
+			height:440px;
+			overflow:hidden;
+		}
+		.prev, .next {
+			position:absolute;
+			top:10px;
+			z-index:100;
+			display:block;
+			width:100px;
+			padding:20px 0px;
+			text-align:center;
+			background:#ff0099;
+		}
+		.prev {
+			left:0px;
+		}
+		.next {
+			left:100px;
+		}
+	</style>
+	<script src="js/modernizr.min.js"></script>
+</head>
+<body>
+	<div id="container">
+		<a href="javascript:void(0);" class="next">next</a>
+		<a href="javascript:void(0);" class="prev">prev</a>
+		<section id="hero1" class="hero">
+			
+			<div class="item">
+				<div class="background" style="background-image:url(img/hero_bg_01.png);"></div>
+				<div class="content"><img src="img/hero_content_01.png"></div>
+			</div>
+			
+			<!--
+			<div class="item1">
+				<div class="background" style="background-image:url(img/hero_bg_01.png);"></div>
+				<div class="content">
+					<div id="video"></div>
+				</div>
+			</div>
+			
+			//-->
+			<div class="item">
+				<div class="background" style="background-image:url(img/hero_bg_02.png);"></div>
+				<div class="content">
+					<div><img src="img/hero_content_02.png"></div>
+				</div>
+			</div>
+			<div class="item">
+				<div class="background" style="background-image:url(img/hero_bg_03.png);"></div>
+				<div class="content"><img src="img/hero_content_03.png"></div>
+			</div>
+			<div class="item">
+				<div class="background" style="background-image:url(img/hero_bg_04.png);"></div>
+				<div class="content"><img src="img/hero_content_04.png"></div>
+			</div>
+		</section>
+		<br/><br/><br/>
+		<!--
+		<section id="hero2" class="hero">
+			<div class="item">
+				<div class="background" style="background-image:url(img/hero_bg_01.png);"></div>
+				<div class="content"><img src="img/hero_content_01.png"></div>
+			</div>
+			<div class="item">
+				<div class="background" style="background-image:url(img/hero_bg_02.png);"></div>
+				<div class="content">
+					<div><img src="img/hero_content_02.png"></div>
+					<div><img src="img/hero_content_03.png"></div>
+					<div><img src="img/hero_content_04.png"></div>
+				</div>
+			</div>
+			<div class="item">
+				<div class="background" style="background-image:url(img/hero_bg_03.png);"></div>
+				<div class="content"><img src="img/hero_content_03.png"></div>
+			</div>
+			<div class="item">
+				<div class="background" style="background-image:url(img/hero_bg_04.png);"></div>
+				<div class="content"><img src="img/hero_content_04.png"></div>
+			</div>
+		</section>
+		//-->
+	</div>
+
+	<script src="js/jquery-1.7.1.min.js"></script>
+	<script src="js/jquery.easing.1.3.js"></script>
+	<script src="js/jquery.debouncedresize.js"></script>
+	<script src="js/jquery.touchSwipe.min.js"></script>
+	<script src="js/jquery.slippy.js"></script>
+	<script>
+		var is_safari_or_uiwebview = /(iPhone|iPod|iPad).*AppleWebKit/i.test(navigator.userAgent);
+		var hero1 = $('#hero1').slippy({
+			auto:true,
+			pauseOnHover:true,
+			pause:3000,
+			delayUntilEvent:true,
+			easing:'easeInOutQuint',
+			speed:1600,
+			infiniteWidth:true,
+			autoHeight:false,
+			minWidth:960,
+			minHeight:440,
+			heightSpeed:1200,
+			widthSpeed:600,
+			startingSlide:1,
+			heightEasing:'easeInOutQuint',
+			widthEasing:'easeOutQuint',
+			onInitComplete:onInitComplete
+		});
+		function onInitComplete(){
+			$('#video').replaceWith(addVideo(960, 440, 'video/video.mp4'));
+			$('#video-player').bind('ended', function(){
+				this.webkitExitFullScreen();
+				onVideoComplete();
+			});
+			$('.next').click(function(){
+				hero1.nextSlide();
+			});
+			$('.prev').click(function(){
+				hero1.prevSlide();
+			})
+		}
+		function onVideoComplete(){
+			console.log('onVideoComplete');
+			// setTimeout(function(){
+				// console.log('    onVideoComplete: call nextSlide');
+				hero1.startSlippy();
+			// }, 5000);
+		}
+		function addVideo(width, height, src){
+			var markup = [];
+			src = src.split('.')[0];
+			markup.push('<video id="video-player" width="'+width+'" height="'+height+'" autoplay="autoplay" preload '+((is_safari_or_uiwebview)?'controls':'')+'>');
+			markup.push('<source type="video/mp4"  src="'+src+'.mp4"/>');
+			markup.push('<source type="video/webm" src="'+src+'.webm"/>');
+			markup.push('<source type="video/ogg"  src="'+src+'.ogv"/>');
+			markup.push('</video>');
+			return markup.join('');
+		}
+		// var hero1 = $('#hero1').bxSliderExtreme({
+		// 	controls:true,
+		// 	auto:false,
+		// 	autoHover:true,
+		// 	pause:9000,
+		// 	infiniteLoop:false,
+		// 	easing:'easeInOutQuint',
+		// 	speed:1600,
+		// 	infiniteWidth:true,
+		// 	autoHeight:true,
+		// 	minWidth:960,
+		// 	minHeight:440,
+		// 	heightSpeed:1200,
+		// 	widthSpeed:600,
+		// 	heightEasing:'easeInOutQuint',
+		// 	widthEasing:'easeOutQuint'
+		// });
+		// var hero2 = $('#hero2').bxSliderExtreme({
+		// 	controls:true,
+		// 	auto:false,
+		// 	autoHover:true,
+		// 	pause:9000,
+		// 	infiniteLoop:false,
+		// 	easing:'easeInOutQuint',
+		// 	speed:1600,
+		// 	infiniteWidth:true,
+		// 	autoHeight:true,
+		// 	minWidth:960,
+		// 	minHeight:440,
+		// 	heightSpeed:1200,
+		// 	widthSpeed:600,
+		// 	heightEasing:'easeInOutQuint',
+		// 	widthEasing:'easeOutQuint'
+		// });
+	</script>
+</body>
+</html>
