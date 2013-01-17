@@ -7,7 +7,7 @@
 	z-index: 2;
 }
 .slippy .slippy-pager-link {
-	background-image: url('/img/slippy_pager.png');
+	background-image: url('../img/slippy_pager.png');
 	background-position: 0px 0px;
 	background-repeat: no-repeat;
 	direction: ltr;
